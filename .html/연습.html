@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+
+    <style media="screen">
+
+    </style>
+
+
+    <script>
+
+      const firebaseConfig = {
+              apiKey: "AIzaSyBRJ2XYLj9YM75dfwEYyuZstx7c3yM3R8g",
+              authDomain: "test-database2001.firebaseapp.com",
+              databaseURL: "https://test-database2001-default-rtdb.firebaseio.com",
+              projectId: "test-database2001",
+              storageBucket: "test-database2001.appspot.com",
+              messagingSenderId: "1062381633514",
+              appId: "1:1062381633514:web:b78cb35c3a02295faebc93"
+            };
+                  
+            firebase.initializeApp(firebaseConfig);
+            let database = firebase.database();
+
+
+
+$(document).ready(()=>{
+
+function joinCall(){
+  let idvalue = $("#idvalue").val();
+  let pwdvalue = $("#pwdvalue").val();
+  $.ajax({
+    url: "https://us-central1-test-database2001.cloudfunctions.net/join", // 클라이언트가 요청을 보낼 서버의 URL 주소
+    type: "POST",                             // HTTP 요청 방식(GET, POST)
+    data: {id : idvlaue, pwd : pwdvalue},
+    dataType: "json"                         // 서버에서 보내줄 데이터의 타입
+    })
+    .done(function(json) {
+    });
+    // $("<h1>").text(json.title).appendTo("body");
+    // $("<div class=\"content\">").html(json.html).appendTo("body");
+  };
+})
+
+function loginCall(){
+  let idvalue = $("#idvalue").val();
+  let pwdvalue = $("#pwdvalue").val();
+  $.ajax({
+    url: "https://us-central1-test-database2001.cloudfunctions.net/login", // 클라이언트가 요청을 보낼 서버의 URL 주소
+    type: "POST",                             // HTTP 요청 방식(GET, POST)
+    data: {id : idvalue, pwd : pwdvalue},
+    dataType: "json"                         // 서버에서 보내줄 데이터의 타입
+    })
+    .done(function(json) {
+      alert(json["result"]);
+    });
+    // $("<h1>").text(json.title).appendTo("body");
+    // $("<div class=\"content\">").html(json.html).appendTo("body");
+  };        
+
+    $("#join").on("click", ()=>{
+    joinCall();
+    });
+
+    $("#login").on("click", ()=>{
+    let id = $("#idvalue".val());
+    let pwd = $("#pwdvalue".val());
+    });
+
+
+
+
+
+    database.ref("members/"+id).on("value", (snapshot)=>{
+            if(snapshot.val()){
+              if(pwd==snapshot.val()){
+                alert("로그인 되었씁니다.");
+                $("#chatList").show();
+              }else{
+                alert("비밀번호가 틀립니다.");
+              }
+            }else{
+              alert("등록되지 않은 회원입니다.");
+            }
+          });
+ 
+
+
+             $(()=>{
+
+              $("#chatList").hide();
+
+              $("#join").on("click", ()=>{
+                  joinCall();
+                });
+
+              $("#login").on("click", ()=>{
+                let id = $("#idvalue").val();
+                let pwd = $("#pwdvalue").val();
+              });
+              });
+
+    </script>
+
+
+  </head>
+
+  <body>
+
+
+    <input id="message" name="" value="">
+
+    <button id="timeRecord">시간 기록</button>
+
+    <div id="chatList">
+
+    </div>
+
+
+
+    Invalid backend response.
+Data is not JSON.
+<!DOCTYPE html> <html lang="ko-KR"> <head> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> <title>로그인 &lsaquo; brandier &#8212; 워드프레스</title> <meta name='robots' content='max-image-preview:large, noindex, noarchive' /> <link rel='dns-prefetch' href='//s.w.org' /> <script>if (document.location.protocol != "https:") {document.location = document.URL.replace(/^http:/i, "https:");}</script><link rel='stylesheet' id='dashicons-css' href='https://brandier.co.kr/wp-includes/css/dashicons.min.css' type='text/css' media='all' /> <link rel='stylesheet' id='buttons-css' href='https://brandier.co.kr/wp-includes/css/buttons.min.css' type='text/css' media='all' /> <link rel='stylesheet' id='forms-css' href='https://brandier.co.kr/wp-admin/css/forms.min.css' type='text/css' media='all' /> <link rel='stylesheet' id='l10n-css' href='https://brandier.co.kr/wp-admin/css/l10n.min.css' type='text/css' media='all' /> <link rel='stylesheet' id='login-css' href='https://brandier.co.kr/wp-admin/css/login.min.css' type='text/css' media='all' /> <meta name='referrer' content='strict-origin-when-cross-origin' /> <meta name="viewport" content="width=device-width" /> </head> <body class="login no-js login-action-login wp-core-ui locale-ko-kr"> <script type="text/javascript"> document.body.className = document.body.className.replace('no-js','js'); </script> <div id="login"> <h1><a href="https://wordpress.org/">워드프레스 제공</a></h1> <form name="loginform" id="loginform" action="https://brandier.co.kr/wp-login.php" method="post"> <p> <label for="user_login">사용자명 또는 이메일 주소</label> <input type="text" name="log" id="user_login" class="input" value="" size="20" autocapitalize="off" autocomplete="username" /> </p> <div class="user-pass-wrap"> <label for="user_pass">비밀번호</label> <div class="wp-pwd"> <input type="password" name="pwd" id="user_pass" class="input password-input" value="" size="20" autocomplete="current-password" /> <button type="button" class="button button-secondary wp-hide-pw hide-if-no-js" data-toggle="0" aria-label="비밀번호 보이기"> <span class="dashicons dashicons-visibility" aria-hidden="true"></span> </button> </div> </div> <script src="https://code.jquery.com/jquery-1.12.4.js" integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU=" crossorigin="anonymous"></script> <script> jQuery(".mo_btn-mo").prop("disabled",false); </script> <script type="text/javascript"> jQuery(document).ready(function () { jQuery(".login-button").css("cursor", "pointer"); }); function mo_openid_on_consent_change(checkbox){ if (! checkbox.checked) { jQuery('#mo_openid_consent_checkbox').val(1); jQuery(".mo_btn-mo").attr("disabled", true); jQuery(".login-button").addClass("dis"); } else { jQuery('#mo_openid_consent_checkbox').val(0); jQuery(".mo_btn-mo").attr("disabled", false); jQuery(".login-button").removeClass("dis"); } } var perfEntries = performance.getEntriesByType("navigation"); if (perfEntries[0].type === "back_forward") { location.reload(true); } function HandlePopupResult(result) { window.location = "https://brandier.co.kr"; } function moOpenIdLogin(app_name,is_custom_app) { var current_url = window.location.href; var cookie_name = "redirect_current_url"; var d = new Date(); d.setTime(d.getTime() + (2 * 24 * 60 * 60 * 1000)); var expires = "expires="+d.toUTCString(); document.cookie = cookie_name + "=" + current_url + ";" + expires + ";path=/"; var base_url = 'https://brandier.co.kr'; var request_uri = '/wp-login.php?redirect_to=https%3A%2F%2Fbrandier.co.kr%2Fwp-admin%2Fadmin.php%3Fpage%3Dwp_file_manager&reauth=1'; var http = 'https://'; var http_host = 'brandier.co.kr'; var default_nonce = '135b017d02'; var custom_nonce = '3a32aa7f9d'; if(is_custom_app == 'false'){ if ( request_uri.indexOf('wp-login.php') !=-1){ var redirect_url = base_url + '/?option=getmosociallogin&wp_nonce=' + default_nonce + '&app_name='; }else { var redirect_url = http + http_host + request_uri; if(redirect_url.indexOf('?') != -1){ redirect_url = redirect_url +'&option=getmosociallogin&wp_nonce=' + default_nonce + '&app_name='; } else { redirect_url = redirect_url +'?option=getmosociallogin&wp_nonce=' + default_nonce + '&app_name='; } } } else { if ( request_uri.indexOf('wp-login.php') !=-1){ var redirect_url = base_url + '/?option=oauthredirect&wp_nonce=' + custom_nonce + '&app_name='; }else { var redirect_url = http + http_host + request_uri; if(redirect_url.indexOf('?') != -1) redirect_url = redirect_url +'&option=oauthredirect&wp_nonce=' + custom_nonce + '&app_name='; else redirect_url = redirect_url +'?option=oauthredirect&wp_nonce=' + custom_nonce + '&app_name='; } } if( 0) { var myWindow = window.open(redirect_url + app_name, "", "width=700,height=620"); } else{ window.location.href = redirect_url + app_name; } } </script> <div class='mo-openid-app-icons'> <p style='color:#000000; width: fit-content;'> Connect with</p><a rel='nofollow' style='margin-left: 8px !important;background: rgb(255,255,255)!important; background:linear-gradient(90deg, rgba(255,255,255,1) 40px, rgb(79, 113, 232) 5%) !important;width: 200px !important;padding-top:6px !important;padding-bottom:6px !important;margin-bottom: 3px !important;border-radius: 4px !important;border-color: rgba(79, 113, 232, 1);border-bottom-width: thin;'class='mo_btn mo_btn-mo mo_btn-block mo_btn-social mo_btn-google mo_btn-custom-dec login-button mo_btn_transform'onClick="moOpenIdLogin('google','false');"> <img class='fa' style='padding-top:0px !important; margin-top: 0' src='https://brandier.co.kr/wp-content/plugins/miniorange-login-openid/includes/images/icons/g.png'>Login with Google</a><a rel='nofollow' style='margin-left: 8px !important;width: 200px !important;padding-top:6px !important;padding-bottom:6px !important;margin-bottom: 3px !important;border-radius: 4px !important;'class='mo_btn mo_btn-mo mo_btn-block mo_btn-social mo_btn-linkedin mo_btn-custom-dec login-button mo_btn_transform_i 'onClick="moOpenIdLogin('linkedin','false');"> <i class='fab fa-linkedin' style='padding-top:0px !important; margin-top: 0' src='https://brandier.co.kr/wp-content/plugins/miniorange-login-openid/includes/images/icons/linkedin.png'></i>Login with Linkedin</a><a rel='nofollow' style='margin-left: 8px !important;width: 200px !important;padding-top:6px !important;padding-bottom:6px !important;margin-bottom: 3px !important;border-radius: 4px !important;'class='mo_btn mo_btn-mo mo_btn-block mo_btn-social mo_btn-amazon mo_btn-custom-dec login-button mo_btn_transform_i 'onClick="moOpenIdLogin('amazon','false');"> <i class='fab fa-amazon' style='padding-top:0px !important; margin-top: 0' src='https://brandier.co.kr/wp-content/plugins/miniorange-login-openid/includes/images/icons/amazon.png'></i>Login with Amazon</a></div> <br><br/> <p class="forgetmenot"><input name="rememberme" type="checkbox" id="rememberme" value="forever" /> <label for="rememberme">기억하기</label></p> <p class="submit"> <input type="submit" name="wp-submit" id="wp-submit" class="button button-primary button-large" value="로그인" /> <input type="hidden" name="redirect_to" value="https://brandier.co.kr/wp-admin/admin.php?page=wp_file_manager" /> <input type="hidden" name="testcookie" value="1" /> </p> </form> <p id="nav"> <a href="https://brandier.co.kr/?page_id=46&#038;lost-password">비밀번호를 잊으셨나요?</a> </p> <script type="text/javascript"> function wp_attempt_focus() {setTimeout( function() {try {d = document.getElementById( "user_login" );d.focus(); d.select();} catch( er ) {}}, 200);} wp_attempt_focus(); if ( typeof wpOnload === 'function' ) { wpOnload() } </script> <p id="backtoblog"> <a href="https://brandier.co.kr/">&larr; brandier(으)로 가기</a> </p> </div> <div class="language-switcher"> <form id="language-switcher" action="" method="get"> <label for="language-switcher-locales"> <span class="dashicons dashicons-translation" aria-hidden="true"></span> <span class="screen-reader-text">언어</span> </label> <select name="wp_lang" id="language-switcher-locales"><option value="en_US" lang="en" data-installed="1">English (United States)</option> <option value="ko_KR" lang="ko" selected='selected' data-installed="1">한국어</option></select> <input type="hidden" name="redirect_to" value="https://brandier.co.kr/wp-admin/admin.php?page=wp_file_manager" /> <input type="submit" class="button" value="변경"> </form> </div> <link rel='stylesheet' id='mo-openid-sl-wp-font-awesome-css' href='https://brandier.co.kr/wp-content/plugins/miniorange-login-openid/includes/css/mo-font-awesome.min.css' type='text/css' media='all' /> <link rel='stylesheet' id='mo-wp-style-icon-css' href='https://brandier.co.kr/wp-content/plugins/miniorange-login-openid/includes/css/mo_openid_login_icons.css?version=7.5.12' type='text/css' media='all' /> <link rel='stylesheet' id='mo-wp-bootstrap-social-css' href='https://brandier.co.kr/wp-content/plugins/miniorange-login-openid/includes/css/bootstrap-social.css' type='text/css' media='all' /> <link rel='stylesheet' id='mo-wp-bootstrap-main-css' href='https://brandier.co.kr/wp-content/plugins/miniorange-login-openid/includes/css/bootstrap.min-preview.css' type='text/css' media='all' /> <script type='text/javascript' src='https://brandier.co.kr/wp-includes/js/jquery/jquery.min.js' id='jquery-core-js'></script> <script type='text/javascript' src='https://brandier.co.kr/wp-includes/js/jquery/jquery-migrate.min.js' id='jquery-migrate-js'></script> <script type='text/javascript' id='zxcvbn-async-js-extra'> /* <![CDATA[ */ var _zxcvbnSettings = {"src":"https:\/\/brandier.co.kr\/wp-includes\/js\/zxcvbn.min.js"}; /* ]]> */ </script> <script type='text/javascript' src='https://brandier.co.kr/wp-includes/js/zxcvbn-async.min.js' id='zxcvbn-async-js'></script> <script type='text/javascript' src='https://brandier.co.kr/wp-includes/js/dist/vendor/regenerator-runtime.min.js' id='regenerator-runtime-js'></script> <script type='text/javascript' src='https://brandier.co.kr/wp-includes/js/dist/vendor/wp-polyfill.min.js' id='wp-polyfill-js'></script> <script type='text/javascript' src='https://brandier.co.kr/wp-includes/js/dist/hooks.min.js' id='wp-hooks-js'></script> <script type='text/javascript' src='https://brandier.co.kr/wp-includes/js/dist/i18n.min.js' id='wp-i18n-js'></script> <script type='text/javascript' id='wp-i18n-js-after'> wp.i18n.setLocaleData( { 'text direction\u0004ltr': [ 'ltr' ] } ); </script> <script type='text/javascript' id='password-strength-meter-js-extra'> /* <![CDATA[ */ var pwsL10n = {"unknown":"\ube44\ubc00\ubc88\ud638 \uac15\ub3c4 \uc54c \uc218 \uc5c6\uc74c","short":"\ub9e4\uc6b0 \uc57d\ud568","bad":"\uc57d\ud568","good":"\ubcf4\ud1b5","strong":"\uac15\ud568","mismatch":"\ubd88\uc77c\uce58"}; /* ]]> */ </script> <script type='text/javascript' id='password-strength-meter-js-translations'> ( function( domain, translations ) { var localeData = translations.locale_data[ domain ] || translations.locale_data.messages; localeData[""].domain = domain; wp.i18n.setLocaleData( localeData, domain ); } )( "default", {"translation-revision-date":"2022-05-07 23:53:36+0000","generator":"GlotPress\/4.0.0-alpha.1","domain":"messages","locale_data":{"messages":{"":{"domain":"messages","plural-forms":"nplurals=1; plural=0;","lang":"ko_KR"},"%1$s is deprecated since version %2$s! Use %3$s instead. Please consider writing more inclusive code.":["%2$s\ubc84\uc804\ubd80\ud130 %1$s\uc744(\ub97c) \uc0ac\uc6a9\ud558\uc9c0 \uc54a\uc2b5\ub2c8\ub2e4! \ub300\uc2e0 %3$s\uc744(\ub97c) \uc0ac\uc6a9\ud558\uc138\uc694. \ub354 \ud3ec\uad04\uc801\uc778 \ucf54\ub4dc \uc4f0\uae30\ub97c \uace0\ub824\ud574\uc8fc\uc138\uc694."]}},"comment":{"reference":"wp-admin\/js\/password-strength-meter.js"}} ); </script> <script type='text/javascript' src='https://brandier.co.kr/wp-admin/js/password-strength-meter.min.js' id='password-strength-meter-js'></script> <script type='text/javascript' src='https://brandier.co.kr/wp-includes/js/underscore.min.js' id='underscore-js'></script> <script type='text/javascript' id='wp-util-js-extra'> /* <![CDATA[ */ var _wpUtilSettings = {"ajax":{"url":"\/wp-admin\/admin-ajax.php"}}; /* ]]> */ </script> <script type='text/javascript' src='https://brandier.co.kr/wp-includes/js/wp-util.min.js' id='wp-util-js'></script> <script type='text/javascript' id='user-profile-js-extra'> /* <![CDATA[ */ var userProfileL10n = {"user_id":"0","nonce":"a518a857fd"}; /* ]]> */ </script> <script type='text/javascript' id='user-profile-js-translations'> ( function( domain, translations ) { var localeData = translations.locale_data[ domain ] || translations.locale_data.messages; localeData[""].domain = domain; wp.i18n.setLocaleData( localeData, domain ); } )( "default", {"translation-revision-date":"2022-05-07 23:53:36+0000","generator":"GlotPress\/4.0.0-alpha.1","domain":"messages","locale_data":{"messages":{"":{"domain":"messages","plural-forms":"nplurals=1; plural=0;","lang":"ko_KR"},"Your new password has not been saved.":["\uc0c8 \ube44\ubc00\ubc88\ud638\uac00 \uc800\uc7a5\ub418\uc9c0 \uc54a\uc558\uc2b5\ub2c8\ub2e4."],"Hide":["\uc228\uae30\uae30"],"Show":["\ubcf4\uc774\uae30"],"Confirm use of weak password":["\uc57d\ud55c \ube44\ubc00\ubc88\ud638 \uc0ac\uc6a9 \ud655\uc778"],"Hide password":["\ube44\ubc00\ubc88\ud638 \uc228\uae30\uae30"],"Show password":["\ube44\ubc00\ubc88\ud638 \ubcf4\uc774\uae30"]}},"comment":{"reference":"wp-admin\/js\/user-profile.js"}} ); </script> <script type='text/javascript' src='https://brandier.co.kr/wp-admin/js/user-profile.min.js' id='user-profile-js'></script> <script type='text/javascript' src='https://brandier.co.kr/wp-content/plugins/miniorange-login-openid/includes/js/mo_openid_jquery.cookie.min.js' id='js-cookie-script-js'></script> <div class="clear"></div> </body> </html> {"cwd":{"isowner":false,"ts":1661921553,"mime":"directory","read":1,"write":1,"size":0,"hash":"l1_Lw","name":"www","rootRev":"","options":{"path":"","url":"https:\/\/brandier.co.kr\/","tmbUrl":"https:\/\/brandier.co.kr\/.tmb\/","disabled":["help","preference","hide","netmount","chmod"],"separator":"\/","copyOverwrite":1,"uploadOverwrite":1,"uploadMaxSize":9223372036854775807,"uploadMaxConn":3,"uploadMime":{"firstOrder":"deny","allow":["image","text\/plain"],"deny":[]},"dispInlineRegex":"^(?:(?:video|audio)|image\/(?!.+\\+xml)|application\/(?:ogg|x-mpegURL|dash\\+xml)|(?:text\/plain|application\/pdf)$)","jpgQuality":100,"archivers":{"create":["application\/x-tar","application\/x-gzip","application\/zip"],"extract":["application\/x-tar","application\/x-gzip","application\/zip"],"createext":{"application\/x-tar":"tar","application\/x-gzip":"tgz","application\/zip":"zip"}},"uiCmdMap":[],"syncChkAsTs":1,"syncMinMs":10000,"i18nFolderName":0,"tmbCrop":1,"tmbReqCustomData":false,"substituteImg":true,"onetimeUrl":true,"csscls":"elfinder-navbar-root-local"},"volumeid":"l1_","locked":1,"dirs":1,"isroot":1,"phash":"","root":"l1_Lw"},"options":{"path":"www","url":"https:\/\/brandier.co.kr\/","tmbUrl":"https:\/\/brandier.co.kr\/.tmb\/","disabled":["help","preference","hide","netmount","chmod"],"separator":"\/","copyOverwrite":1,"uploadOverwrite":1,"uploadMaxSize":9223372036854775807,"uploadMaxConn":3,"uploadMime":{"firstOrder":"deny","allow":["image","text\/plain"],"deny":[]},"dispInlineRegex":"^(?:(?:video|audio)|image\/(?!.+\\+xml)|application\/(?:ogg|x-mpegURL|dash\\+xml)|(?:text\/plain|application\/pdf)$)","jpgQuality":100,"archivers":{"create":["application\/x-tar","application\/x-gzip","application\/zip"],"extract":["application\/x-tar","application\/x-gzip","application\/zip"],"createext":{"application\/x-tar":"tar","application\/x-gzip":"tgz","application\/zip":"zip"}},"uiCmdMap":[],"syncChkAsTs":1,"syncMinMs":10000,"i18nFolderName":0,"tmbCrop":1,"tmbReqCustomData":false,"substituteImg":true,"onetimeUrl":true},"files":[{"isowner":false,"ts":1661921553,"mime":"directory","read":1,"write":1,"size":0,"hash":"l1_Lw","name":"www","rootRev":"","options":{"path":"","url":"https:\/\/brandier.co.kr\/","tmbUrl":"https:\/\/brandier.co.kr\/.tmb\/","disabled":["help","preference","hide","netmount","chmod"],"separator":"\/","copyOverwrite":1,"uploadOverwrite":1,"uploadMaxSize":9223372036854775807,"uploadMaxConn":3,"uploadMime":{"firstOrder":"deny","allow":["image","text\/plain"],"deny":[]},"dispInlineRegex":"^(?:(?:video|audio)|image\/(?!.+\\+xml)|application\/(?:ogg|x-mpegURL|dash\\+xml)|(?:text\/plain|application\/pdf)$)","jpgQuality":100,"archivers":{"create":["application\/x-tar","application\/x-gzip","application\/zip"],"extract":["application\/x-tar","application\/x-gzip","application\/zip"],"createext":{"application\/x-tar":"tar","application\/x-gzip":"tgz","application\/zip":"zip"}},"uiCmdMap":[],"syncChkAsTs":1,"syncMinMs":10000,"i18nFolderName":0,"tmbCrop":1,"tmbReqCustomData":false,"substituteImg":true,"onetimeUrl":true,"csscls":"elfinder-navbar-root-local"},"volumeid":"l1_","locked":1,"dirs":1,"isroot":1,"phash":""},{"isowner":false,"mime":"text\/x-php","ts":1649755576,"read":1,"write":1,"size":"23706","hash":"l1_d3Atc2V0dGluZ3MucGhw","name":"wp-settings.php","phash":"l1_Lw"},{"isowner":false,"mime":"text\/x-php","ts":1651139356,"read":1,"write":1,"size":"3943","hash":"l1_d3AtY3Jvbi5waHA","name":"wp-cron.php","phash":"l1_Lw"},{"isowner":false,"mime":"text\/x-php","ts":1591646110,"read":1,"write":1,"size":"3236","hash":"l1_eG1scnBjLnBocA","name":"xmlrpc.php","phash":"l1_Lw"},{"isowner":false,"mime":"text\/x-php","ts":1661921552,"read":1,"write":1,"size":"3001","hash":"l1_d3AtY29uZmlnLXNhbXBsZS5waHA","name":"wp-config-sample.php","phash":"l1_Lw"},{"isowner":false,"mime":"text\/plain","ts":1660789942,"read":1,"write":1,"size":"1260","hash":"l1_Lmh0YWNjZXNz","name":".htaccess","phash":"l1_Lw"},{"isowner":false,"mime":"text\/x-php","ts":1649677324,"read":1,"write":1,"size":"32051","hash":"l1_d3Atc2lnbnVwLnBocA","name":"wp-signup.php","phash":"l1_Lw"},{"isowner":false,"mime":"directory","ts":1662024371,"read":1,"write":1,"size":0,"hash":"l1_Zm9udHM","name":"fonts","phash":"l1_Lw","volumeid":"l1_"},{"isowner":false,"mime":"text\/x-php","ts":1647966303,"read":1,"write":1,"size":"8577","hash":"l1_d3AtbWFpbC5waHA","name":"wp-mail.php","phash":"l1_Lw"},{"isowner":false,"mime":"text\/x-php","ts":1649677324,"read":1,"write":1,"size":"4748","hash":"l1_d3AtdHJhY2tiYWNrLnBocA","name":"wp-trackback.php","phash":"l1_Lw"},{"isowner":false,"mime":"directory","ts":1662026318,"read":1,"write":1,"size":0,"hash":"l1_d3AtY29udGVudA","name":"wp-content","phash":"l1_Lw","volumeid":"l1_","dirs":1},{"isowner":false,"mime":"text\/x-php","ts":1636499221,"read":1,"write":1,"size":"2338","hash":"l1_d3AtY29tbWVudHMtcG9zdC5waHA","name":"wp-comments-post.php","phash":"l1_Lw"},{"isowner":false,"mime":"text\/html","ts":1661921552,"read":1,"write":1,"size":"7401","hash":"l1_cmVhZG1lLmh0bWw","name":"readme.html","phash":"l1_Lw"},{"isowner":false,"mime":"text\/x-php","ts":1649728027,"read":1,"write":1,"size":"3973","hash":"l1_d3AtbG9hZC5waHA","name":"wp-load.php","phash":"l1_Lw"},{"isowner":false,"mime":"text\/x-php","ts":1611193020,"read":1,"write":1,"size":"7165","hash":"l1_d3AtYWN0aXZhdGUucGhw","name":"wp-activate.php","phash":"l1_Lw"},{"isowner":false,"mime":"directory","ts":1660617950,"read":1,"write":1,"size":0,"hash":"l1_LndlbGwta25vd24","name":".well-known","phash":"l1_Lw","volumeid":"l1_","dirs":1},{"isowner":false,"mime":"text\/x-php","ts":1660789591,"read":1,"write":1,"size":"3459","hash":"l1_d3AtY29uZmlnLnBocA","name":"wp-config.php","phash":"l1_Lw"},{"isowner":false,"mime":"directory","ts":1660901307,"read":1,"write":1,"size":0,"hash":"l1_d3AtYWRtaW4","name":"wp-admin","phash":"l1_Lw","volumeid":"l1_","dirs":1},{"isowner":false,"mime":"text\/x-php","ts":1580970791,"read":1,"write":1,"size":"351","hash":"l1_d3AtYmxvZy1oZWFkZXIucGhw","name":"wp-blog-header.php","phash":"l1_Lw"},{"isowner":false,"mime":"text\/plain","ts":1661921552,"read":1,"write":1,"size":"19915","hash":"l1_bGljZW5zZS50eHQ","name":"license.txt","phash":"l1_Lw"},{"isowner":false,"mime":"directory","ts":1660618037,"read":1,"write":1,"size":0,"hash":"l1_a2V5cw","name":"keys","phash":"l1_Lw","volumeid":"l1_","dirs":1},{"isowner":false,"mime":"text\/html","ts":1660134037,"read":1,"write":1,"size":"388","hash":"l1_aG9zdGluZ19pbmRleC5odG1s","name":"hosting_index.html","phash":"l1_Lw"},{"isowner":false,"mime":"text\/x-php","ts":1647721872,"read":1,"write":1,"size":"2494","hash":"l1_d3AtbGlua3Mtb3BtbC5waHA","name":"wp-links-opml.php","phash":"l1_Lw"},{"isowner":false,"mime":"text\/x-php","ts":1651242970,"read":1,"write":1,"size":"48498","hash":"l1_d3AtbG9naW4ucGhw","name":"wp-login.php","phash":"l1_Lw"},{"isowner":false,"mime":"text\/x-php","ts":1580970791,"read":1,"write":1,"size":"405","hash":"l1_aW5kZXgucGhw","name":"index.php","phash":"l1_Lw"},{"isowner":false,"mime":"directory","ts":1657642601,"read":1,"write":1,"size":0,"hash":"l1_d3AtaW5jbHVkZXM","name":"wp-includes","phash":"l1_Lw","volumeid":"l1_","dirs":1}],"api":"2.1060","uplMaxSize":"100M","uplMaxFile":"20","netDrivers":["ziparchive"],"maxTargets":1000,"textMimes":["application\/dash+xml","application\/docbook+xml","application\/javascript","application\/json","application\/plt","application\/sat","application\/sql","application\/step","application\/vnd.hp-hpgl","application\/x-awk","application\/x-config","application\/x-csh","application\/x-empty","application\/x-mpegurl","application\/x-perl","application\/x-php","application\/x-web-config","application\/xhtml+xml","application\/xml","audio\/x-mp3-
+
+  </body>
+</html>
+
+
+

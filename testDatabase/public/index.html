@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Welcome to Firebase Hosting</title>
+
+    <script src="https://code.jquery.com/jquery-latest.min.js">
+
+    </script>
+    <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-database.js"></script>
+
+    <script>
+      
+      function joinCall(){
+        let idvalue = $("#idvalue").val();
+        let pwdvalue = $("#pwdvalue").val();
+
+        $.ajax({
+        url: "https://us-central1-test-database2001.cloudfunctions.net/join", 
+        type: "POST",
+        data: {id:idvalue, pwd:pwdvalue},                 
+        dataType: "json"                         
+        })
+        .done(function(json) {
+          console.log(json);
+        })
+      };
+
+      function loginCall(){
+        let idvalue = $("#idvalue").val();
+        let pwdvalue = $("#pwdvalue").val();
+
+        $.ajax({
+        url: "https://us-central1-test-database2001.cloudfunctions.net/login", 
+        type: "POST",
+        data: {id:idvalue, pwd:pwdvalue},                 
+        dataType: "json"                         
+        })
+        .done(function(json) {
+          console.log(json);
+        })
+      }
+
+
+
+    </script>
+
+  </head>
+
+  <body>
+    <input type="text" id="idvalue" placeholder="아이디">
+    <input type="password" id="pwdvalue" placeholder="패스워드">
+
+    <button id="join">회원가입</button>
+    <button id="login">로그인</button>
+
+    <div id="chatList">채팅 내용</div>
+
+  </body>
+</html>
